@@ -1,0 +1,17 @@
+# Netlify configuration file
+
+[build]
+  # Specify the directory to deploy
+  publish = "client"
+  # Set the command to install dependencies (if needed)
+  command = "npm install"
+
+[functions]
+  # Specify the directory containing Netlify Functions
+  directory = "netlify/functions"
+
+[[redirects]]
+  # Redirect all API requests to Netlify Functions
+  from = "/api/*"
+  to = "/.netlify/functions/server"
+  status = 200

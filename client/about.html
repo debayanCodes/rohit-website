@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About & Contact - Rohit's Multi-Service Company</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100">
+    <header class="bg-blue-600 text-white p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">Rohit's Multi-Service Company</h1>
+            <nav>
+                <ul class="flex space-x-4">
+                    <li><a href="index.html" class="hover:underline">Home</a></li>
+                    <li><a href="trading.html" class="hover:underline">Trading Segment</a></li>
+                    <li><a href="web.html" class="hover:underline">Website Designing & Development</a></li>
+                    <li><a href="wish.html" class="hover:underline">Wish Printing</a></li>
+                    <li><a href="#" class="hover:underline">About & Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto mt-8">
+        <div class="grid grid-cols-2 gap-8">
+            <section class="bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-3xl font-bold mb-4">About Us</h2>
+                <p class="mb-4">Rohit's Multi-Service Company is a versatile business offering a wide range of services
+                    including trading, wish printing, website designing & development, and e-services.</p>
+                <p>Our mission is to provide high-quality, comprehensive solutions to meet the diverse needs of our
+                    clients, from financial services to creative design and digital solutions.</p>
+                <br>
+                <p class="mb-4"><strong>Address:</strong> Shapoorji Pallonji Shukhobrishti, SP Sukhobrishti Lane, Action
+                    Area III, Newtown, Kolkata, West Bengal-700135</p>
+                <p class="mb-4"><strong>Mobile:</strong> 7602000560</p>
+            </section>
+
+            <section class="bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-3xl font-bold mb-4">Contact Form</h2>
+                <form id="contactForm" class="mt-4">
+                    <input type="text" name="name" placeholder="Your Name" class="w-full p-2 mb-2 border rounded"
+                        required>
+                    <input type="email" name="email" placeholder="Your Email" class="w-full p-2 mb-2 border rounded"
+                        required>
+                    <textarea name="message" placeholder="Your Message" class="w-full p-2 mb-2 border rounded" rows="4"
+                        required></textarea>
+                    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Send
+                        Message</button>
+                </form>
+                <p id="formResponse" class="mt-4"></p>
+            </section>
+        </div>
+        <section class="mt-8 bg-white p-6 rounded-lg shadow-md">
+            <h3 class="text-2xl font-bold mb-4">
+                <center>Our Location</center>
+            </h3>
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3684.3582060296753!2d88.51084607475696!3d22.56570223322421!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a020afe3fa83dab%3A0xda5c16b563780319!2sShapoorji%20Pallonji%20Shukhobrishti%20Housing%20Complex!5e0!3m2!1sen!2sin!4v1724815160352!5m2!1sen!2sin"
+                width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white mt-8 py-4">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2024 Rohit's Multi-Service Company. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const formData = new FormData(this);
+            const responseElement = document.getElementById('formResponse');
+
+            fetch('http://localhost:3000/send_mail', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: document.querySelector('input[name="name"]').value,
+                    email: document.querySelector('input[name="email"]').value,
+                    message: document.querySelector('textarea[name="message"]').value
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        document.getElementById('formResponse').textContent = data.message;
+                        document.getElementById('formResponse').classList.add('text-green-500');
+                    } else {
+                        document.getElementById('formResponse').textContent = data.message;
+                        document.getElementById('formResponse').classList.add('text-red-500');
+                    }
+                })
+                .catch(error => {
+                    document.getElementById('formResponse').textContent = "An error occurred. Please try again.";
+                    document.getElementById('formResponse').classList.add('text-red-500');
+                });
+            this.reset();
+        });
+    </script>
+</body>
+
+</html>
