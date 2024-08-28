@@ -5,44 +5,87 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rohit's Multi-Service Company</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/2.3.0/alpine.js" integrity="sha512-nIwdJlD5/vHj23CbO2iHCXtsqzdTTx3e3uAmpTm4x2Y8xCIFyWu4cSIV8GaGe2UNVq86/1h9EgUZy7tn243qdA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    screens: {
+                        '2xl': '1440px',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @media (min-width: 1440px) {
+            .image-container {
+                height: 400px; /* Adjust this value as needed */
+                overflow: hidden;
+            }
+            .image-container img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+    </style>
 </head>
-<body class="bg-gray-100">
-    <header class="bg-blue-600 text-white p-4">
+<body class="font-sans">
+    <header class="bg-blue-600 text-white p-4" x-data="{ isOpen: false }">
         <div class="container mx-auto flex justify-between items-center">
-            <h1 class="text-2xl font-bold">Rohit's Multi-Service Company</h1>
-            <nav>
-                <ul class="flex space-x-4">
-                    <li><a href="#" class="hover:underline">Home</a></li>
-                    <li><a href="trading.html" class="hover:underline">Trading Segment</a></li>
-                    <li><a href="web.html" class="hover:underline">Website Designing & Development</a></li>
-                    <li><a href="wish.html" class="hover:underline">Wish Printing</a></li>
-                    <li><a href="eserve.html" class="hover:underline">E-Serve</a></li>
-                    <li><a href="about.html" class="hover:underline">About & Contact</a></li>
-                </ul>
+            <h1 id="rohits-multi-service-company" class="text-2xl font-bold">Rohit's Multi-Service Company</h1>
+            <button @click="isOpen = !isOpen" class="2xl:hidden">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
+            </button>
+            <nav class="hidden 2xl:flex space-x-4">
+                <a href="#" class="hover:underline">Home</a>
+                <a href="trading.html" class="hover:underline">Trading Segment</a>
+                <a href="web.html" class="hover:underline">Website Designing & Development</a>
+                <a href="wish.html" class="hover:underline">Wish Printing</a>
+                <a href="eserve.html" class="hover:underline">E-Serve</a>
+                <a href="about.html" class="hover:underline">About & Contact</a>
+            </nav>
+        </div>
+        <div class="2xl:hidden" x-show="isOpen" @click.away="isOpen = false">
+            <nav class="flex flex-col space-y-2 mt-4">
+                <a href="#" class="hover:underline">Home</a>
+                <a href="trading.html" class="hover:underline">Trading Segment</a>
+                <a href="web.html" class="hover:underline">Website Designing & Development</a>
+                <a href="wish.html" class="hover:underline">Wish Printing</a>
+                <a href="eserve.html" class="hover:underline">E-Serve</a>
+                <a href="about.html" class="hover:underline">About & Contact</a>
             </nav>
         </div>
     </header>
-    
-    <main class="container mx-auto mt-8">
-        <section class="grid grid-cols-2 gap-8">
-            <div>
-                <h2 class="text-3xl font-bold mb-4">Welcome to Our Multi-Service Platform</h2>
+
+    <main class="container mx-auto mt-8 px-4" role="main">
+        <div class="grid grid-cols-1 2xl:grid-cols-2 gap-8">
+            <div class="w-full">
+                <h2 class="text-2xl 2xl:text-3xl font-bold mb-4">Welcome to Our Multi-Service Platform</h2>
                 <p class="mb-4">We offer a wide range of services including trading, wish printing, and website design & development.</p>
-                <img src="/api/placeholder/600/400" alt="Trading related image" class="w-full rounded-lg shadow-md">
+                <div class="image-container">
+                    <img src="https://www.investopedia.com/thmb/fetZWfPpNcafHGuQFVG2yLKTrTs=/4000x2667/filters:no_upscale():max_bytes(150000):strip_icc()/Primary-Image-how-to-buy-dogecoin-doge-7370204-429d2dbae0404ad1a75cdcfb826f75c7.jpg" alt="Trading related image" class="rounded-lg shadow-md">
+                </div>
             </div>
-            <div>
-                <h3 class="text-2xl font-bold mb-4">Our Services</h3>
-                <ul class="list-disc list-inside space-y-2">
+
+            <div class="w-full">
+                <h3 class="text-xl 2xl:text-2xl font-bold mb-4">Our Services</h3>
+                <ul class="list-disc pl-5 mb-4">
                     <li>Trading and Market Analysis</li>
                     <li>Custom Printing Solutions</li>
                     <li>Website Design and Development</li>
                     <li>E-Serve (Tax, GST, PF, Passport & Visa services)</li>
                 </ul>
-                <img src="/api/placeholder/600/400" alt="Wish Printing related image" class="w-full mt-4 rounded-lg shadow-md">
+                <div class="image-container">
+                    <img src="https://cms.cloudinary.vpsvc.com/image/upload/c_scale,dpr_auto,f_auto,q_auto:best,t_productPageHeroGalleryTransformation_v2,w_auto/India%20LOB/visiting-cards/Standard%20Visiting%20Cards/IN_Standard-Visiting-Cards_Hero-image_01" alt="Wish Printing related image" class="rounded-lg shadow-md">
+                </div>
             </div>
-        </section>
+        </div>
     </main>
-    
+
     <footer class="bg-gray-800 text-white mt-8 py-4">
         <div class="container mx-auto text-center">
             <p>&copy; 2024 Rohit's Multi-Service Company. All rights reserved.</p>

@@ -6,27 +6,71 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About & Contact - Rohit's Multi-Service Company</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/2.3.0/alpine.js"
+        integrity="sha512-nIwdJlD5/vHj23CbO2iHCXtsqzdTTx3e3uAmpTm4x2Y8xCIFyWu4cSIV8GaGe2UNVq86/1h9EgUZy7tn243qdA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    screens: {
+                        '2xl': '1440px',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @media (min-width: 1440px) {
+            .image-container {
+                height: 400px;
+                /* Adjust this value as needed */
+                overflow: hidden;
+            }
+
+            .image-container img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+    </style>
 </head>
 
 <body class="bg-gray-100">
-    <header class="bg-blue-600 text-white p-4">
+    <header class="bg-blue-600 text-white p-4" x-data="{ isOpen: false }">
         <div class="container mx-auto flex justify-between items-center">
-            <h1 class="text-2xl font-bold">Rohit's Multi-Service Company</h1>
-            <nav>
-                <ul class="flex space-x-4">
-                    <li><a href="index.html" class="hover:underline">Home</a></li>
-                    <li><a href="trading.html" class="hover:underline">Trading Segment</a></li>
-                    <li><a href="web.html" class="hover:underline">Website Designing & Development</a></li>
-                    <li><a href="wish.html" class="hover:underline">Wish Printing</a></li>
-                    <li><a href="eserve.html" class="hover:underline">E-Serve</a></li>
-                    <li><a href="#" class="hover:underline">About & Contact</a></li>
-                </ul>
+            <h1 id="rohits-multi-service-company" class="text-2xl font-bold">Rohit's Multi-Service Company</h1>
+            <button @click="isOpen = !isOpen" class="2xl:hidden">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7">
+                    </path>
+                </svg>
+            </button>
+            <nav class="hidden 2xl:flex space-x-4">
+                <a href="index.html" class="hover:underline">Home</a>
+                <a href="trading.html" class="hover:underline">Trading Segment</a>
+                <a href="web.html" class="hover:underline">Website Designing & Development</a>
+                <a href="wish.html" class="hover:underline">Wish Printing</a>
+                <a href="eserve.html" class="hover:underline">E-Serve</a>
+                <a href="#" class="hover:underline">About & Contact</a>
+            </nav>
+        </div>
+        <div class="2xl:hidden" x-show="isOpen" @click.away="isOpen = false">
+            <nav class="flex flex-col space-y-2 mt-4">
+                <a href="index.html" class="hover:underline">Home</a>
+                <a href="trading.html" class="hover:underline">Trading Segment</a>
+                <a href="web.html" class="hover:underline">Website Designing & Development</a>
+                <a href="wish.html" class="hover:underline">Wish Printing</a>
+                <a href="eserve.html" class="hover:underline">E-Serve</a>
+                <a href="#" class="hover:underline">About & Contact</a>
             </nav>
         </div>
     </header>
 
-    <main class="container mx-auto mt-8">
-        <div class="grid grid-cols-2 gap-8">
+    <main class="container mx-auto mt-8 px-4">
+        <div class="grid grid-cols-1 gap-8 2xl:grid-cols-2">
             <section class="bg-white p-6 rounded-lg shadow-md">
                 <h2 class="text-3xl font-bold mb-4">About Us</h2>
                 <p class="mb-4">Rohit's Multi-Service Company is a versatile business offering a wide range of services
@@ -46,6 +90,8 @@
                         required>
                     <input type="email" name="email" placeholder="Your Email" class="w-full p-2 mb-2 border rounded"
                         required>
+                    <input type="tel" name="mobile" placeholder="Your Mobile Number"
+                        class="w-full p-2 mb-2 border rounded" required>
                     <textarea name="message" placeholder="Your Message" class="w-full p-2 mb-2 border rounded" rows="4"
                         required></textarea>
                     <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Send
@@ -75,13 +121,14 @@
     <script>
         document.getElementById('contactForm').addEventListener('submit', function (e) {
             e.preventDefault();
-    
+
             const formData = {
                 name: document.querySelector('input[name="name"]').value,
                 email: document.querySelector('input[name="email"]').value,
+                mobile: document.querySelector('input[name="mobile"]').value,
                 message: document.querySelector('textarea[name="message"]').value
             };
-    
+
             fetch('/.netlify/functions/server', {
                 method: 'POST',
                 headers: {
@@ -89,19 +136,19 @@
                 },
                 body: JSON.stringify(formData)
             })
-            .then(response => response.json())
-            .then(data => {
-                const responseElement = document.getElementById('formResponse');
-                responseElement.textContent = data.message;
-                responseElement.className = data.status === 'success' ? 'text-green-500' : 'text-red-500';
-            })
-            .catch(error => {
-                const responseElement = document.getElementById('formResponse');
-                responseElement.textContent = "An error occurred. Please try again.";
-                responseElement.className = 'text-red-500';
-                console.error('Error:', error);
-            });
-    
+                .then(response => response.json())
+                .then(data => {
+                    const responseElement = document.getElementById('formResponse');
+                    responseElement.textContent = data.message;
+                    responseElement.className = data.status === 'success' ? 'text-green-500' : 'text-red-500';
+                })
+                .catch(error => {
+                    const responseElement = document.getElementById('formResponse');
+                    responseElement.textContent = "An error occurred. Please try again.";
+                    responseElement.className = 'text-red-500';
+                    console.error('Error:', error);
+                });
+
             this.reset();
         });
     </script>

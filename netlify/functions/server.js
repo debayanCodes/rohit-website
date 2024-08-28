@@ -16,13 +16,13 @@ const transporter = nodemailer.createTransport({
 exports.handler = async function(event, context) {
     if (event.httpMethod === 'POST') {
         try {
-            const { name, email, message } = JSON.parse(event.body);
+            const { name, email, mobile, message } = JSON.parse(event.body);
 
             const mailOptions = {
                 from: 'downloadingmedia@gmail.com', // Use your email as the sender
                 to: 'downloadingmedia@gmail.com', // Replace with your email address
                 subject: 'New Contact Form Submission',
-                text: `Name: ${name}\nEmail: ${email}\nMessage:\n${message}`
+                text: `Name: ${name}\nEmail: ${email}\nMobile: ${mobile}\nMessage:\n${message}`
             };
 
             await transporter.sendMail(mailOptions);

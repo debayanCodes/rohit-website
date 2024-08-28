@@ -5,28 +5,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Web Designing and Development - Rohit's Multi-Service Company</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/2.3.0/alpine.js" integrity="sha512-nIwdJlD5/vHj23CbO2iHCXtsqzdTTx3e3uAmpTm4x2Y8xCIFyWu4cSIV8GaGe2UNVq86/1h9EgUZy7tn243qdA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    screens: {
+                        '2xl': '1440px',
+                    }
+                }
+            }
+        }
+    </script>
 </head>
 <body class="bg-gray-100">
-    <header class="bg-blue-600 text-white p-4">
+    <header class="bg-blue-600 text-white p-4" x-data="{ isOpen: false }">
         <div class="container mx-auto flex justify-between items-center">
-            <h1 class="text-2xl font-bold">Rohit's Multi-Service Company</h1>
-            <nav>
-                <ul class="flex space-x-4">
-                    <li><a href="index.html" class="hover:underline">Home</a></li>
-                    <li><a href="trading.html" class="hover:underline">Trading Segment</a></li>
-                    <li><a href="#" class="hover:underline">Website Designing & Development</a></li>
-                    <li><a href="wish.html" class="hover:underline">Wish Printing</a></li>
-                    <li><a href="eserve.html" class="hover:underline">E-Serve</a></li>
-                    <li><a href="about.html" class="hover:underline">About & Contact</a></li>
-                </ul>
+            <h1 id="rohits-multi-service-company" class="text-2xl font-bold">Rohit's Multi-Service Company</h1>
+            <button @click="isOpen = !isOpen" class="2xl:hidden">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
+            </button>
+            <nav class="hidden 2xl:flex space-x-4">
+                <a href="index" class="hover:underline">Home</a>
+                <a href="trading.html" class="hover:underline">Trading Segment</a>
+                <a href="#" class="hover:underline">Website Designing & Development</a>
+                <a href="wish.html" class="hover:underline">Wish Printing</a>
+                <a href="eserve.html" class="hover:underline">E-Serve</a>
+                <a href="about.html" class="hover:underline">About & Contact</a>
+            </nav>
+        </div>
+        <div class="2xl:hidden" x-show="isOpen" @click.away="isOpen = false">
+            <nav class="flex flex-col space-y-2 mt-4">
+                <a href="index.html" class="hover:underline">Home</a>
+                <a href="trading.html" class="hover:underline">Trading Segment</a>
+                <a href="#" class="hover:underline">Website Designing & Development</a>
+                <a href="wish.html" class="hover:underline">Wish Printing</a>
+                <a href="eserve.html" class="hover:underline">E-Serve</a>
+                <a href="about.html" class="hover:underline">About & Contact</a>
             </nav>
         </div>
     </header>
     
-    <main class="container mx-auto mt-8">
+    <main class="container mx-auto mt-8 px-4">
         <h2 class="text-3xl font-bold mb-8">Web Designing and Development Services</h2>
         
-        <div class="grid grid-cols-2 gap-8">
+        <div class="grid grid-cols-1 2xl:grid-cols-2 gap-8">
             <section class="bg-white p-6 rounded-lg shadow-md">
                 <h3 class="text-2xl font-bold mb-4">Custom Website Design</h3>
                 <p>We create visually stunning and user-friendly websites tailored to your brand and business needs.</p>
