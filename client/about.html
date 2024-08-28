@@ -78,7 +78,7 @@
             const formData = new FormData(this);
             const responseElement = document.getElementById('formResponse');
 
-            fetch('http://localhost:3000/send_mail', {
+            fetch('/.netlify/functions/server', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -104,6 +104,7 @@
                     document.getElementById('formResponse').classList.add('text-red-500');
                 });
             this.reset();
+
         });
     </script>
 </body>
