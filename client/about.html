@@ -74,37 +74,34 @@
     <script>
         document.getElementById('contactForm').addEventListener('submit', function (e) {
             e.preventDefault();
-
-            const formData = new FormData(this);
-            const responseElement = document.getElementById('formResponse');
-
+    
+            const formData = {
+                name: document.querySelector('input[name="name"]').value,
+                email: document.querySelector('input[name="email"]').value,
+                message: document.querySelector('textarea[name="message"]').value
+            };
+    
             fetch('/.netlify/functions/server', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({
-                    name: document.querySelector('input[name="name"]').value,
-                    email: document.querySelector('input[name="email"]').value,
-                    message: document.querySelector('textarea[name="message"]').value
-                })
+                body: JSON.stringify(formData)
             })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.status === 'success') {
-                        document.getElementById('formResponse').textContent = data.message;
-                        document.getElementById('formResponse').classList.add('text-green-500');
-                    } else {
-                        document.getElementById('formResponse').textContent = data.message;
-                        document.getElementById('formResponse').classList.add('text-red-500');
-                    }
-                })
-                .catch(error => {
-                    document.getElementById('formResponse').textContent = "An error occurred. Please try again.";
-                    document.getElementById('formResponse').classList.add('text-red-500');
-                });
+            .then(response => response.json())
+            .then(data => {
+                const responseElement = document.getElementById('formResponse');
+                responseElement.textContent = data.message;
+                responseElement.className = data.status === 'success' ? 'text-green-500' : 'text-red-500';
+            })
+            .catch(error => {
+                const responseElement = document.getElementById('formResponse');
+                responseElement.textContent = "An error occurred. Please try again.";
+                responseElement.className = 'text-red-500';
+                console.error('Error:', error);
+            });
+    
             this.reset();
-
         });
     </script>
 </body>

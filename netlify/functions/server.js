@@ -2,7 +2,6 @@
 
 const nodemailer = require('nodemailer');
 const { parse } = require('querystring');
-const { promisify } = require('util');
 
 const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -17,11 +16,10 @@ const transporter = nodemailer.createTransport({
 exports.handler = async function(event, context) {
     if (event.httpMethod === 'POST') {
         try {
-            const parsedBody = await promisify(parse)(event.body);
-            const { name, email, message } = parsedBody;
+            const { name, email, message } = JSON.parse(event.body);
 
             const mailOptions = {
-                from: email,
+                from: 'downloadingmedia@gmail.com', // Use your email as the sender
                 to: 'downloadingmedia@gmail.com', // Replace with your email address
                 subject: 'New Contact Form Submission',
                 text: `Name: ${name}\nEmail: ${email}\nMessage:\n${message}`
@@ -33,6 +31,7 @@ exports.handler = async function(event, context) {
                 body: JSON.stringify({ status: 'success', message: 'Email sent successfully!' })
             };
         } catch (error) {
+            console.error('Error sending email:', error);
             return {
                 statusCode: 500,
                 body: JSON.stringify({ status: 'error', message: 'Failed to send email. Please try again later.' })
